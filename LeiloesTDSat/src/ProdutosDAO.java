@@ -54,8 +54,21 @@ public class ProdutosDAO {
             return null;
         }
         
+    }
+    
+    public void vendido (String id){
+        String sql = "UPDATE produtos SET status = ? WHERE id = ?";
         
-        
+        try {
+            PreparedStatement stmt = conn.prepareStatement(sql,ResultSet.TYPE_SCROLL_INSENSITIVE,
+                            ResultSet.CONCUR_UPDATABLE);
+            stmt.setString(1, "Vendido");
+            stmt.setString(2, id);
+            stmt.execute();
+            JOptionPane.showMessageDialog(null, "Status do produto atualizado para “Vendido”.", "Confirmação", JOptionPane.INFORMATION_MESSAGE);
+        } catch (Exception e) {
+            System.out.println("Erro ao editar dados do cliente "+ e.getMessage());
+        }
     }
     
     

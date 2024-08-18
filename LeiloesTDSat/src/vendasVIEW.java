@@ -1,3 +1,7 @@
+
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -12,8 +16,27 @@ public class vendasVIEW extends javax.swing.JFrame {
     /**
      * Creates new form vendasVIEW
      */
+    public void preencherTabela(){
+        ProdutosDAO dao = new ProdutosDAO();
+        List <ProdutosDTO> listaProduto = dao.listarProdutosVendidos();
+        
+        DefaultTableModel modelo = (DefaultTableModel) tblVendas.getModel(); //cast
+        modelo.setNumRows(0);
+        
+        for (ProdutosDTO p : listaProduto){ //em cada volta do laço for, o mesmo adiciona um dado dentro do objeto = obj
+            Object[] obj = new Object[] { //addRow só aceita objeto entao criou-se um object para receber os dados de 'p.'
+                p.getId(),
+                p.getNome(),
+                p.getValor(),
+                p.getStatus(),
+            };
+            modelo.addRow(obj);
+        }     
+    }
+    
     public vendasVIEW() {
         initComponents();
+        preencherTabela();
     }
 
     /**
@@ -30,7 +53,7 @@ public class vendasVIEW extends javax.swing.JFrame {
         btnVoltar = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblVendas = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Tela de Vendas");
@@ -62,7 +85,7 @@ public class vendasVIEW extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblVendas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -73,7 +96,7 @@ public class vendasVIEW extends javax.swing.JFrame {
                 "ID", "Nome", "Valor", "Status"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblVendas);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -168,6 +191,6 @@ public class vendasVIEW extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblVendas;
     // End of variables declaration//GEN-END:variables
 }

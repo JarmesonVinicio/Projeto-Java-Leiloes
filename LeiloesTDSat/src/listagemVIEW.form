@@ -86,7 +86,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTable" name="listaProdutos">
+        <Component class="javax.swing.JTable" name="TabelaProdutos">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
               <Table columnCount="4" rowCount="4">
@@ -150,7 +150,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JTextPane" name="id_produto_venda">
+        <Component class="javax.swing.JTextPane" name="txt_VenderProd">
         </Component>
       </SubComponents>
     </Container>

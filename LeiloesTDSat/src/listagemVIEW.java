@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -23,11 +24,11 @@ public class listagemVIEW extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        listaProdutos = new javax.swing.JTable();
+        TabelaProdutos = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        id_produto_venda = new javax.swing.JTextPane();
+        txt_VenderProd = new javax.swing.JTextPane();
         btnVender = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         btnVendas = new javax.swing.JButton();
@@ -36,7 +37,7 @@ public class listagemVIEW extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Lista de Produtos");
 
-        listaProdutos.setModel(new javax.swing.table.DefaultTableModel(
+        TabelaProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -47,7 +48,7 @@ public class listagemVIEW extends javax.swing.JFrame {
                 "ID", "Nome", "Valor", "Status"
             }
         ));
-        jScrollPane1.setViewportView(listaProdutos);
+        jScrollPane1.setViewportView(TabelaProdutos);
 
         jLabel1.setFont(new java.awt.Font("Lucida Fax", 0, 18)); // NOI18N
         jLabel1.setText("Lista de Produtos");
@@ -55,7 +56,7 @@ public class listagemVIEW extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Lucida Fax", 0, 14)); // NOI18N
         jLabel2.setText("Vender Produto (ID)");
 
-        jScrollPane2.setViewportView(id_produto_venda);
+        jScrollPane2.setViewportView(txt_VenderProd);
 
         btnVender.setText("Vender");
         btnVender.addActionListener(new java.awt.event.ActionListener() {
@@ -130,17 +131,27 @@ public class listagemVIEW extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
-        String id = id_produto_venda.getText();
+        String testeID = txt_VenderProd.getText();
+        boolean validarID = testeID.matches("[1-9]");
+        //verificar se o campo de texto esta vazio e se o formato está correto:
+        if(txt_VenderProd.getText().isBlank() || validarID == false){
+            JOptionPane.showMessageDialog(null, "O campo não pode estar vazio e deve ser informado\num número (ID) do produto", "ERRO",JOptionPane.ERROR_MESSAGE);
+        }
         
-        ProdutosDAO produtosdao = new ProdutosDAO();
-        
+        else {
+            String id = txt_VenderProd.getText();
+            ProdutosDAO dao = new ProdutosDAO();
+            dao.venderProduto(id);
+        }
+   
         //produtosdao.venderProduto(Integer.parseInt(id));
         listarProdutos();
     }//GEN-LAST:event_btnVenderActionPerformed
 
     private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
-        //vendasVIEW vendas = new vendasVIEW(); 
-        //vendas.setVisible(true);
+        vendasVIEW vendas = new vendasVIEW(); 
+        vendas.setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnVendasActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
@@ -185,23 +196,23 @@ public class listagemVIEW extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable TabelaProdutos;
     private javax.swing.JButton btnVendas;
     private javax.swing.JButton btnVender;
     private javax.swing.JButton btnVoltar;
-    private javax.swing.JTextPane id_produto_venda;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable listaProdutos;
+    private javax.swing.JTextPane txt_VenderProd;
     // End of variables declaration//GEN-END:variables
 
     private void listarProdutos(){
         try {
             ProdutosDAO produtosdao = new ProdutosDAO();
             
-            DefaultTableModel model = (DefaultTableModel) listaProdutos.getModel();
+            DefaultTableModel model = (DefaultTableModel) TabelaProdutos.getModel();
             model.setNumRows(0);
             
             ArrayList<ProdutosDTO> listagem = produtosdao.listarProdutos();

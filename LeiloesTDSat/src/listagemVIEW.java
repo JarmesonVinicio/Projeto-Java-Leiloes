@@ -141,7 +141,7 @@ public class listagemVIEW extends javax.swing.JFrame {
         else {
             String id = txt_VenderProd.getText();
             ProdutosDAO dao = new ProdutosDAO();
-            dao.vendido(id);
+            dao.venderProduto(id);
         }
    
         //produtosdao.venderProduto(Integer.parseInt(id));
